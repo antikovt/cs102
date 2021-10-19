@@ -14,19 +14,20 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    plaintext = list(map(ord, plaintext))
-    for i in range(len(plaintext)):
-        if 65 <= plaintext[i] <= 90:
-            plaintext[i] += shift
-            while plaintext[i] > 90:
-                plaintext[i] -= 26
-        elif 97 <= plaintext[i] <= 122:
-            plaintext[i] += shift
-            while plaintext[i] > 122:
-                plaintext[i] -= 26
-        plaintext[i] = chr(plaintext[i])
+    en_process = list(map(ord, plaintext))
+    ciphered = []
+    for i in range(len(en_process)):
+        if 65 <= en_process[i] <= 90:
+            en_process[i] += shift
+            while en_process[i] > 90:
+                en_process[i] -= 26
+        elif 97 <= en_process[i] <= 122:
+            en_process[i] += shift
+            while en_process[i] > 122:
+                en_process[i] -= 26
+        ciphered.append(chr(en_process[i]))
     line = ""
-    ciphertext = line.join(plaintext)
+    ciphertext = line.join(ciphered)
     return ciphertext
 
 
@@ -43,17 +44,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    ciphertext = list(map(ord, ciphertext))
-    for i in range(len(ciphertext)):
-        if 65 <= ciphertext[i] <= 90:
-            ciphertext[i] -= shift
-            while ciphertext[i] < 65:
-                ciphertext[i] += 26
-        elif 97 <= ciphertext[i] <= 122:
-            ciphertext[i] -= shift
-            while ciphertext[i] < 97:
-                ciphertext[i] += 26
-        ciphertext[i] = chr(ciphertext[i])
+    de_process = list(map(ord, ciphertext))
+    deciphered = []
+    for i in range(len(de_process)):
+        if 65 <= de_process[i] <= 90:
+            de_process[i] -= shift
+            while de_process[i] < 65:
+                de_process[i] += 26
+        elif 97 <= de_process[i] <= 122:
+            de_process[i] -= shift
+            while de_process[i] < 97:
+                de_process[i] += 26
+        deciphered.append(chr(de_process[i]))
     line = ""
-    plaintext = line.join(ciphertext)
+    plaintext = line.join(deciphered)
     return plaintext
