@@ -14,8 +14,20 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    ciphertext = ""
-    # PUT YOUR CODE HERE
+    en_process = list(map(ord, plaintext))
+    ciphered = []
+    for i in range(len(en_process)):
+        if 65 <= en_process[i] <= 90:
+            en_process[i] += shift
+            while en_process[i] > 90:
+                en_process[i] -= 26
+        elif 97 <= en_process[i] <= 122:
+            en_process[i] += shift
+            while en_process[i] > 122:
+                en_process[i] -= 26
+        ciphered.append(chr(en_process[i]))
+    line = ""
+    ciphertext = line.join(ciphered)
     return ciphertext
 
 
@@ -32,15 +44,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    plaintext = ""
-    # PUT YOUR CODE HERE
+    de_process = list(map(ord, ciphertext))
+    deciphered = []
+    for i in range(len(de_process)):
+        if 65 <= de_process[i] <= 90:
+            de_process[i] -= shift
+            while de_process[i] < 65:
+                de_process[i] += 26
+        elif 97 <= de_process[i] <= 122:
+            de_process[i] -= shift
+            while de_process[i] < 97:
+                de_process[i] += 26
+        deciphered.append(chr(de_process[i]))
+    line = ""
+    plaintext = line.join(deciphered)
     return plaintext
-
-
-def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
-    """
-    Brute force breaking a Caesar cipher.
-    """
-    best_shift = 0
-    # PUT YOUR CODE HERE
-    return best_shift
