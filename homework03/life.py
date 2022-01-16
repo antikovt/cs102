@@ -1,10 +1,11 @@
 import pathlib
 import random as rn
 import typing as tp
+from copy import deepcopy
+from pprint import pprint as pp
+
 import pygame
 from pygame.locals import *
-from pprint import pprint as pp
-from copy import deepcopy
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
