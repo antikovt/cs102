@@ -14,7 +14,7 @@ class Console(UI):
 
     def draw_grid(self, screen) -> None:
         """Отобразить состояние клеток."""
-        grid = self.life.curr_gen
+        grid = self.life.curr_generation
         for i in range(self.life.rows):
             for j in range(self.life.cols):
                 cell = "*" if grid[i][j] == 1 else " "

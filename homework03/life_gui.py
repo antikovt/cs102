@@ -54,10 +54,10 @@ class GUI(UI):
                     x, y = event.pos
                     j = x // self.cell_size
                     i = y // self.cell_size
-                    if self.life.curr_gen[i][j] == 0:
-                        self.life.curr_gen[i][j] = 1
+                    if self.life.curr_generation[i][j] == 0:
+                        self.life.curr_generation[i][j] = 1
                     else:
-                        self.life.curr_gen[i][j] = 0
+                        self.life.curr_generation[i][j] = 0
                     self.draw_grid()
                     pygame.display.flip()
             if pause:
