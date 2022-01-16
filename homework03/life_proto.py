@@ -1,7 +1,8 @@
 import random as rn
 import typing as tp
-from pprint import pprint as pp
 from copy import deepcopy
+from pprint import pprint as pp
+
 import pygame
 from pygame.locals import *
 
