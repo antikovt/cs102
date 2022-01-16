@@ -70,16 +70,10 @@ class GameOfLife:
 
     def get_neighbours(self, cell: Cell) -> Cells:
         neighbours = []
-        for i in range(cell[0] - 1, cell[0] + 2):
-            for j in range(cell[1] - 1, cell[1] + 2):
-                if i == -1:
-                    i = self.cell_height - 1
-                if i == self.cell_height:
-                    i = 0
-                if j == -1:
-                    j = self.cell_width - 1
-                if j == self.cell_width:
-                    j = 0
+        rows = len(self.grid)
+        cols = len(self.grid[0]) if rows else 0
+        for i in range(max(0, cell[0] - 1), min(rows, cell[0] + 2)):
+            for j in range(max(0, cell[1] - 1), min(cols, cell[1] + 2)):
                 if (i, j) != cell:
                     neighbours.append(self.grid[i][j])
         return neighbours
