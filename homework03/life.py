@@ -56,7 +56,10 @@ class GameOfLife:
 
     def step(self) -> None:
         if not self.is_max_generations_exceeded:
-            self.prev_generation, self.curr_generation = self.curr_generation, self.get_next_generation()
+            self.prev_generation, self.curr_generation = (
+                self.curr_generation,
+                self.get_next_generation(),
+            )
             self.gens += 1
 
     @property
