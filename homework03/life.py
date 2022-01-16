@@ -31,12 +31,12 @@ class GameOfLife:
 
     def get_neighbours(self, cell: Cell) -> Cells:
         neighbours = []
-        rows = len(self.curr_generation)
-        cols = len(self.curr_generation[1]) if rows else 0
+        rows = len(self.curr_gen)
+        cols = len(self.curr_gen[1]) if rows else 0
         for row in range(max(0, cell[0] - 1), min(rows, cell[0] + 2)):
             for col in range(max(0, cell[1] - 1), min(cols, cell[1] + 2)):
                 if (row, col) != cell:
-                    neighbours.append(self.curr_generation[row][col])
+                    neighbours.append(self.curr_gen[row][col])
         return neighbours
 
     def get_next_gen(self) -> Grid:
