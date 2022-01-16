@@ -71,8 +71,8 @@ class GameOfLife:
 
     def get_neighbours(self, cell: Cell) -> Cells:
         neighbours = []
-        rows = len(self.grid)
-        cols = len(self.grid[0]) if rows else 0
+        rows = self.cell_height
+        cols = self.cell_width if rows else 0
         for i in range(max(0, cell[0] - 1), min(rows, cell[0] + 2)):
             for j in range(max(0, cell[1] - 1), min(cols, cell[1] + 2)):
                 if (i, j) != cell:
@@ -88,7 +88,7 @@ class GameOfLife:
                 for cell in self.get_neighbours((i, j)):
                     if cell == 1:
                         alive += 1
-                if status == 1 and alive in (1, 4, 5, 6, 7, 8):
+                if status == 1 and alive not in [2, 3]:
                     next_grid[i][j] = 0
                 elif status == 0 and alive == 3:
                     next_grid[i][j] = 1
