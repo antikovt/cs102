@@ -16,12 +16,12 @@ class GameOfLife:
         self,
         size: tp.Tuple[int, int],
         randomize: bool = True,
-        max_gens=float("inf"),
+        max_generations=float("inf"),
     ) -> None:
         self.rows, self.cols = size
         self.prev_generation = self.create_grid()
         self.curr_generation = self.create_grid(randomize=randomize)
-        self.max_generations = max_gens
+        self.max_generations = max_generations
         self.gens = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
@@ -39,7 +39,7 @@ class GameOfLife:
                     neighbours.append(self.curr_generation[row][col])
         return neighbours
 
-    def get_next_gen(self) -> Grid:
+    def get_next_generation(self) -> Grid:
         next_grid = deepcopy(self.curr_generation)
         for i in range(self.rows):
             for j in range(self.cols):
@@ -56,7 +56,7 @@ class GameOfLife:
 
     def step(self) -> None:
         if not self.is_max_generations_exceeded:
-            self.prev_generation, self.curr_generation = self.curr_generation, self.get_next_gen()
+            self.prev_generation, self.curr_generation = self.curr_generation, self.get_next_generation()
             self.gens += 1
 
     @property

@@ -32,6 +32,6 @@ class Console(UI):
         curses.endwin()
 
 
-life = GameOfLife((24, 80), max_gens=50)
+life = GameOfLife((24, 80), max_generations=50)
 ui = Console(life)
 ui.run()
