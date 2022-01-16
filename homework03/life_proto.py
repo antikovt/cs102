@@ -1,7 +1,7 @@
 import random as rn
 import typing as tp
 from pprint import pprint as pp
-
+from copy import deepcopy
 import pygame
 from pygame.locals import *
 
@@ -44,7 +44,7 @@ class GameOfLife:
             self.draw_grid()
             pygame.display.flip()
             clock.tick(self.speed)
-            self.grid = self.get_next_gen()
+            self.grid = self.get_next_generation()
         pygame.quit()
 
     def create_grid(self, randomize: bool = False) -> Grid:
@@ -78,8 +78,8 @@ class GameOfLife:
                     neighbours.append(self.grid[i][j])
         return neighbours
 
-    def get_next_gen(self) -> Grid:
-        next_grid = self.grid
+    def get_next_generation(self) -> Grid:
+        next_grid = deepcopy(self.grid)
         for i in range(self.cell_height):
             for j in range(self.cell_width):
                 status = self.grid[i][j]

@@ -19,9 +19,9 @@ class GameOfLife:
         max_gens=float("inf"),
     ) -> None:
         self.rows, self.cols = size
-        self.prev_gen = self.create_grid()
-        self.curr_gen = self.create_grid(randomize=randomize)
-        self.max_gens = max_gens
+        self.prev_generation = self.create_grid()
+        self.curr_generation = self.create_grid(randomize=randomize)
+        self.max_generations = max_gens
         self.gens = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
@@ -31,19 +31,19 @@ class GameOfLife:
 
     def get_neighbours(self, cell: Cell) -> Cells:
         neighbours = []
-        rows = len(self.curr_gen)
-        cols = len(self.curr_gen[1]) if rows else 0
+        rows = len(self.curr_generation)
+        cols = len(self.curr_generation[1]) if rows else 0
         for row in range(max(0, cell[0] - 1), min(rows, cell[0] + 2)):
             for col in range(max(0, cell[1] - 1), min(cols, cell[1] + 2)):
                 if (row, col) != cell:
-                    neighbours.append(self.curr_gen[row][col])
+                    neighbours.append(self.curr_generation[row][col])
         return neighbours
 
     def get_next_gen(self) -> Grid:
-        next_grid = deepcopy(self.curr_gen)
+        next_grid = deepcopy(self.curr_generation)
         for i in range(self.rows):
             for j in range(self.cols):
-                status = self.curr_gen[i][j]
+                status = self.curr_generation[i][j]
                 alive = 0
                 for cell in self.get_neighbours((i, j)):
                     if cell == 1:
@@ -56,7 +56,7 @@ class GameOfLife:
 
     def step(self) -> None:
         if not self.is_max_generations_exceeded:
-            self.prev_gen, self.curr_gen = self.curr_gen, self.get_next_gen()
+            self.prev_generation, self.curr_generation = self.curr_generation, self.get_next_gen()
             self.gens += 1
 
     @property
@@ -64,13 +64,13 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        if self.gens > self.max_gens:
+        if self.gens > self.max_generations:
             return True
         return False
 
     @property
     def is_changing(self) -> bool:
-        if self.curr_gen != self.prev_gen:
+        if self.curr_generation != self.prev_generation:
             return True
         return False
 
@@ -84,7 +84,7 @@ class GameOfLife:
             for line in f:
                 new_grid.append([int(i) for i in line if (i == "0" or i == "1")])
             new_game = GameOfLife((len(new_grid), len(new_grid[0])))
-            new_game.curr_gen = new_grid
+            new_game.curr_generation = new_grid
             return new_game
 
     def save(self, filename: pathlib.Path) -> None:
@@ -94,5 +94,5 @@ class GameOfLife:
         with open(filename, "w") as file:
             for row in range(self.rows):
                 for col in range(self.cols):
-                    file.write(str(self.curr_gen[row][col]))
+                    file.write(str(self.curr_generation[row][col]))
                 file.write("\n")
