@@ -2,7 +2,6 @@ import pathlib
 import random as rn
 import typing as tp
 from copy import deepcopy
-from pprint import pprint as pp
 
 import pygame
 from pygame.locals import *
@@ -17,12 +16,11 @@ class GameOfLife:
         self,
         size: tp.Tuple[int, int],
         randomize: bool = True,
-        max_gens: tp.Optional[float] = float("inf"),
+        max_gens=float("inf"),
     ) -> None:
-
         self.rows, self.cols = size
         self.prev_gen = self.create_grid()
-        self.curr_gen = self.create_grid(True)
+        self.curr_gen = self.create_grid(randomize=randomize)
         self.max_gens = max_gens
         self.gens = 1
 
@@ -92,7 +90,7 @@ class GameOfLife:
             for line in f:
                 new_grid.append([int(i) for i in line if (i == "0" or i == "1")])
             new_game = GameOfLife((len(new_grid), len(new_grid[0])))
-            new_game.curr_generation = new_grid
+            new_game.curr_gen = new_grid
             return new_game
 
     def save(self, filename: pathlib.Path) -> None:
