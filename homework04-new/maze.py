@@ -26,7 +26,7 @@ def remove_wall(
     elif y == len(grid[0]) - 2 and x != 1:
         grid[x - 1][y] = " "
     elif x != 1 and y != len(grid[0]) - 2:
-        wall = random.choice((0, 1))
+        wall = random.randint(0, 2)
         if wall == 0:
             grid[x - 1][y] = " "
         else:
@@ -66,9 +66,7 @@ def bin_tree_maze(
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
         y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
-        y_out = (
-            randint(0, cols - 1) if x_out in (0, rows - 1) else choice((0, cols - 1))
-        )
+        y_out = randint(0, cols - 1) if x_out in (0, rows - 1) else choice((0, cols - 1))
     else:
         x_in, y_in = 0, cols - 2
         x_out, y_out = rows - 1, 1
@@ -155,15 +153,27 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     :return:
     """
     x, y = coord
-    if (
-        grid[x - 1][y] in ("X", "■")
-        and grid[x][y - 1] in ("X", "■")
-        and (x + 1 < len(grid) and grid[x + 1][y] in ("X", "■"))
-        and (y + 1 < len(grid[0]) and grid[x][y + 1] in ("X", "■"))
-    ):
-        return True
-    else:
+    if x not in (0, len(grid)-1) and y not in (0, len(grid[0])-1):
         return False
+    around = [(x-1, y), (x+1, y), (x, y-1), (x, y+1)]
+    for i, wall in enumerate(around):
+        if -1 in wall:
+            around[i] = ""
+            continue
+        if wall[0] == len(grid):
+            around[i] = ""
+            continue
+        if wall[1] == len(grid[0]):
+            around[i] = ""
+            continue
+    valid_exit = 0
+    for wall in around:
+        if wall != "" and grid[wall[0]][wall[1]] in ("X", " "):
+            valid_exit = 1
+            break
+    if valid_exit == 1:
+        return False
+    return True
 
 
 def solve_maze(
