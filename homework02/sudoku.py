@@ -15,8 +15,7 @@ def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
 
 def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
     digits = [c for c in puzzle if c in "123456789."]
-    grid = group(digits, 9)
-    return grid
+    return group(digits, 9)
 
 
 def display(grid: tp.List[tp.List[str]]) -> None:
@@ -43,8 +42,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    groups = [values[x : x + n] for x in range(0, len(values), n)]
-    return groups
+    return [values[x : x + n] for x in range(0, len(values), n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -57,9 +55,7 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    row_num = pos[0]
-    row = grid[row_num]
-    return row
+    return grid[pos[0]]
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -72,9 +68,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    col_num = pos[1]
-    col = [row[col_num] for row in grid]
-    return col
+    return [row[pos[1]] for row in grid]
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -90,11 +84,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     """
     row_group = pos[0] // 3
     col_group = pos[1] // 3
-    block = []
-    for i in range(3):  # row
-        for j in range(3):  # column
-            block.append(grid[i + row_group * 3][j + col_group * 3])
-    return block
+    return [grid[i + row_group * 3][j + col_group * 3] for i in range(3) for j in range(3)]
 
 
 def find_empty_positions(
