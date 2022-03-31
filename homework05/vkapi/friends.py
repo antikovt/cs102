@@ -78,7 +78,18 @@ def get_mutual(
     :param progress: Callback для отображения прогресса.
     """
     if target_uids is None:
-        target_uids = [target_uid]
+        params = {
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"],
+            "source_uid": source_uid if source_uid is not None else "",
+            "target_uid": target_uid,
+            "order": order,
+        }
+        response = session.get(f"friends.getMutual", params=params)
+        response_json = response.json()
+        if "error" in response_json or not response.ok:
+            raise APIError(response_json["error"]["error_msg"])
+        return response_json["response"]
 
     responses = []
 
