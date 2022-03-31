@@ -1,6 +1,7 @@
 import typing as tp
 
 import requests
+
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
@@ -9,9 +10,6 @@ class TimeoutHTTPAdapter(HTTPAdapter):
     def __init__(self, timeout, *args, **kwargs):
         self.timeout = timeout
         super().__init__(*args, **kwargs)
-
-    def send(self, request, **kwargs):
-        return super().send(request, **kwargs)
 
     def send(self, request, **kwargs):
         timeout = kwargs.get("timeout")
@@ -50,8 +48,8 @@ class Session(requests.Session):
         adapter = TimeoutHTTPAdapter(timeout=timeout, max_retries=retry)
         super().mount(self.base_url, adapter)
 
-    def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
+    def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type: ignore
         return super().get(self.base_url + "/" + url, *args, **kwargs)
 
-    def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
+    def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type: ignore
         return super().post(self.base_url + "/" + url, *args, **kwargs)
